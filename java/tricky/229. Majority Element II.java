@@ -10,3 +10,38 @@
 
 
 //idea: Boyer-Moore Majority Vote algorithm
+
+
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        int a = -1, b = -1, counta = 0, countb = 0;
+        for(int i : nums) {
+            if(a == i) {
+                counta++;
+            } else if(b == i)
+                countb++;
+            else if(counta == 0) {
+                a = i;
+                counta++;
+            } else if(countb == 0) {
+                b = i;
+                countb++;
+            } else {
+                counta--;
+                countb--;
+            }
+        }
+        counta = 0;
+        countb = 0;
+        for(int i : nums) {
+            if(a == i)
+                counta++;
+            else if(b == i)
+                countb++;
+        }
+        List<Integer> result = new ArrayList<>();
+        if(counta > nums.length/3) result.add(a);
+        if(countb > nums.length/3) result.add(b);
+        return result;
+    }
+}
